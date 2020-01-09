@@ -158,7 +158,7 @@ def create_batches(x, batch_size, word2id, char2id, config, perm=None, shuffle=T
 
 
 class Model(nn.Module):
-  def __init__(self, config, word_emb_layer, char_emb_layer, use_cuda=False):
+  def __init__(self, config, word_emb_layer, char_emb_layer, use_cuda=False, stateful=True):
     super(Model, self).__init__()
     self.use_cuda = use_cuda
     self.config = config
@@ -171,7 +171,7 @@ class Model(nn.Module):
         config, word_emb_layer, char_emb_layer, use_cuda)
 
     if config['encoder']['name'].lower() == 'elmo':
-      self.encoder = ElmobiLm(config, use_cuda)
+      self.encoder = ElmobiLm(config, use_cuda, stateful)
     elif config['encoder']['name'].lower() == 'lstm':
       self.encoder = LstmbiLm(config, use_cuda)
 

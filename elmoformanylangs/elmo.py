@@ -102,12 +102,12 @@ def create_batches(x, batch_size, word2id, char2id, config, perm=None, shuffle=F
 
 
 class Embedder(object):
-    def __init__(self, model_dir, batch_size=64):
+    def __init__(self, model_dir, batch_size=64, stateful=True):
         self.model_dir = model_dir
-        self.model, self.config = self.get_model()
+        self.model, self.config = self.get_model(stateful)
         self.batch_size = batch_size
 
-    def get_model(self):
+    def get_model(self, stateful):
         # torch.cuda.set_device(1)
         self.use_cuda = torch.cuda.is_available()
         # load the model configurations
@@ -154,7 +154,7 @@ class Embedder(object):
             word_emb_layer = None
 
         # instantiate the model
-        model = Model(config, word_emb_layer, char_emb_layer, self.use_cuda)
+        model = Model(config, word_emb_layer, char_emb_layer, self.use_cuda, stateful)
 
         if self.use_cuda:
             model.cuda()

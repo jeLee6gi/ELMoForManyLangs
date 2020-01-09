@@ -16,8 +16,8 @@ RnnStateStorage = Tuple[torch.Tensor, ...]  # pylint: disable=invalid-name
 
 
 class ElmobiLm(_EncoderBase):
-  def __init__(self, config, use_cuda=False):
-    super(ElmobiLm, self).__init__(stateful=True)
+  def __init__(self, config, use_cuda=False, stateful=False):
+    super(ElmobiLm, self).__init__(stateful)
     self.config = config
     self.use_cuda = use_cuda
     input_size = config['encoder']['projection_dim']
